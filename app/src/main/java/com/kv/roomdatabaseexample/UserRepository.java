@@ -19,6 +19,12 @@ public class UserRepository {
     public void insert(User user)
     {
         new Thread(()-> userDao.insert(user)).start();
+        // Добавить уведомление о том что записано
+    }
+
+    public void delete(User user)
+    {
+        // добавить удаление и уведомление о удалении
     }
 
     public void getAll(DataBaseListener listener)
