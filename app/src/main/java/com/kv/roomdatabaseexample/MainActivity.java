@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.kv.roomdatabaseexample.databinding.ActivityMainBinding;
 
@@ -26,7 +27,12 @@ public class MainActivity extends AppCompatActivity {
         {
             String login = __binding.editTextTextEmailAddress.getText().toString();
             String password = __binding.editTextTextPassword.getText().toString();
-            repository.insert(new User(login,password));
+            repository.insert(new User(login, password), new UserRepository.DataBaseListener() {
+                @Override
+                public <T> void notify(T data) {
+                    __binding.getRoot().post(() -> Toast.makeText(getApplicationContext(), ""+data, Toast.LENGTH_SHORT).show());
+                }
+            });
 
 
         });
@@ -47,5 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         });
+
+
     }
 }

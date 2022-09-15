@@ -16,10 +16,16 @@ public class UserRepository {
         this.userDao = userDao;
     }
 
-    public void insert(User user)
+    public void insert(User user, DataBaseListener DBL)
     {
-        new Thread(()-> userDao.insert(user)).start();
-        // Добавить уведомление о том что записано
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                userDao.insert(user);
+                DBL.notify("Adding Complete");
+            }
+        }).start();
+        // Добавить уведомление о том что записанo
     }
 
     public void delete(User user)
